@@ -45,8 +45,8 @@ Crie as seguintes pastas no seu diretório de trabalho para configurar corretame
 **AVISO: Dependendo do seu sistema operacional, pode ser necessário configurar o Docker para usar pelo menos 4,00 GB de memória para que os contêineres do Airflow funcionem corretamente.**
 - Para alterar o uso de memória alocada para o Docker, **usuários Windows.** Abra um editor de texto e digite as configurações desejadas:
 ```bash
-    [wsl2]
-    memory=4GB
+[wsl2]
+memory=4GB
 ```
 - Salve o arquivo como .wslconfig no diretório do seu usuário: C:\usarios\user.
 - No campo Nome do arquivo, insira 
@@ -116,5 +116,40 @@ docker exec -it <container_name> bash
 ![alt text](imagens/airflow.png)
 
 O usuário e senha padrão do Airflow são ambos **airflow**
+
+### 3 . Configurando Snowflake no Airflow:
+
+3.1 Acesse a interface do Airflow.
+
+3.2 Abra o menu de conexões: Vá em Admin > Connections.
+
+3.3 Adicione uma nova conexão: lique no botão + Add a new record.
+
+3.4 Configure a conexão: Preencha os campos conforme abaixo:
+- **Connection Id:** Escolha um nome único, por exemplo, snowflake_default.
+- **Conn Type:** Selecione Snowflake na lista de opções disponíveis.
+- **Schema:** Insira o nome do esquema padrão que será utilizado durante a conexão.
+- **Login:** Insira o nome do usuário associado à conta Snowflake.
+- **Password:** Forneça a senha correspondente ao usuário inserido.
+- **Account:** Especifique o identificador único da conta Snowflake. Este valor pode ser localizado em Admin > Accounts > Account. Por exemplo: abc123-ab12345.
+- **Warehouse:** Preencha com o nome do warehouse que será utilizado para executar consultas e operações.
+- **Database:** Indique o nome do banco de dados padrão a ser utilizado para a conexão.
+- **Region:** Informe a região associada à conta Snowflake. Esse dado também pode ser encontrado em Admin > Accounts > Account.
+- **Role:** Defina a função (role) que será usada para a conexão, como SYSADMIN ou ACCOUNTADMIN.
+
+3.5 Testando a Conexão ao Snowflake
+Para verificar se a conexão foi configurada corretamente, acesse o container do Airflow:
+
+ ```bash 
+docker exec -it <container_name> bash
+```
+Teste a conexão configurada: Utilize o comando airflow connections get para verificar os detalhes da conexão. 
+
+ ```bash
+airflow connections get <Connection Id>
+```
+Substitua Connection Id pelo nome que você definiu para a conexão, como snowflake_default.  
+
+Se o comando exibiu corretamente os detalhes da conexão, incluindo senha, login, e os demais campos configurados, isso indica que a conexão foi configurada corretamente no Airflow
 
 
