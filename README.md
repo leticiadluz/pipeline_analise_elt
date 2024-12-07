@@ -1,4 +1,4 @@
-## Tutorial: Como Instalar o Apache Airflow com Docker
+## Tutorial: Como instalar e configurar o Apache Airflow com Docker
 
 Contexto: 
 - Airflow tem várias dependências (banco de dados, executores, webserver, scheduler). Configurá-las manualmente pode ser complexo. Com o Docker, essas dependências são gerenciadas em contêineres, facilitando a configuração.  
@@ -11,7 +11,7 @@ Contexto:
 1.1 Instale o Docker  
 Certifique-se de que o Docker está instalado em seu sistema. Você pode baixá-lo e instalá-lo a partir do site oficial: [Docker](https://www.docker.com/).
 
-1.2 Usuários de Windows: Configure o WSL
+1.2 Usuários de Windows -> Configure o WSL  
 Se você está utilizando o Windows, será necessário instalar e configurar o Windows Subsystem for Linux (WSL). Atualize o WSL utilizando o seguinte comando no terminal:
 ```bash
 wsl --update
@@ -40,10 +40,11 @@ Crie as seguintes pastas no seu diretório de trabalho para configurar corretame
 - /logs - Pasta onde os logs de execução serão salvos.  
 - /plugins - Local para seus plugins personalizados.  
 
-É importante criar as pastas manualmente para garantir controle sobre as permissões e evitar problemas de sincronização entre o host e o container. A pasta config é opcional e pode ser usada caso você queira adicionar configurações personalizadas
+É importante criar as pastas manualmente para garantir controle sobre as permissões e evitar problemas de sincronização entre o host e o contêiner. A pasta config é opcional e pode ser usada caso você queira adicionar configurações personalizadas
 
 **AVISO: Dependendo do seu sistema operacional, pode ser necessário configurar o Docker para usar pelo menos 4,00 GB de memória para que os contêineres do Airflow funcionem corretamente.**
-- Para alterar o uso de memória alocada para o Docker, **usuários Windows.** Abra um editor de texto e digite as configurações desejadas:
+
+- **Usuários Windows:** Para alterar o uso de memória alocada para o Docker, abra um editor de texto e digite as configurações desejadas:
 ```bash
 [wsl2]
 memory=4GB
@@ -71,7 +72,7 @@ Swap:   1.0G     0.3G   0.7G
 - used: Memória sendo usada.
 - free: Memória disponível.
 
-O Comando abaixo também pode confirmar a quantidade de memória alocada:
+O Comando abaixo também pode confirmar a quantidade de memória alocada para o Docker:
 ```bash
 docker info
 ```
@@ -92,7 +93,7 @@ airflow-init_1       | Admin user airflow created
 airflow-init_1       | 2.10.2
 start_airflow-init_1 exited with code 0
 ```
-2.9 Inicie os Serviços do Airflow: Para iniciar o Airflow, digite: 
+2.9 Inicie os serviços do Airflow: Para iniciar o Airflow, digite: 
 
 ```bash 
 docker compose up -d
@@ -105,17 +106,17 @@ docker ps
 ```
 Caso algum contêiner esteja apresentando falha, você pode acessar o terminal dentro contêiner do Airflow:
 
-Isso permite inspecionar o ambiente diretamente.
+Isso permite inspecionar o ambiente diretamente:
 
  ```bash 
 docker exec -it <container_name> bash
 ```
 
-2.11 Acesse o Airflow: Aguarde a inicialização dos contêineres.Acesse o Airflow no navegador em: http://localhost:8080. Isso redirecionará para a tela de login do Airflow.
+2.11 Acesse o Airflow: Aguarde a inicialização dos contêineres. Acesse o Airflow no navegador em: http://localhost:8080. Isso redirecionará para a tela de login do Airflow.
 
 ![alt text](imagens/airflow.png)
 
-O usuário e senha padrão do Airflow são ambos **airflow**
+O usuário e senha padrão do Airflow são ambos **airflow.**
 
 ### 3 . Configurando Snowflake no Airflow:
 
@@ -132,18 +133,18 @@ O usuário e senha padrão do Airflow são ambos **airflow**
 - **Login:** Insira o nome do usuário associado à conta Snowflake.
 - **Password:** Forneça a senha correspondente ao usuário inserido.
 - **Account:** Especifique o identificador único da conta Snowflake. Este valor pode ser localizado em Admin > Accounts > Account. Por exemplo: abc123-ab12345.
-- **Warehouse:** Preencha com o nome do warehouse que será utilizado para executar consultas e operações.
+- **Warehouse:** Preencha com o nome do Warehouse que será utilizado para executar consultas e operações.
 - **Database:** Indique o nome do banco de dados padrão a ser utilizado para a conexão.
 - **Region:** Informe a região associada à conta Snowflake. Esse dado também pode ser encontrado em Admin > Accounts > Account.
 - **Role:** Defina a função (role) que será usada para a conexão, como SYSADMIN ou ACCOUNTADMIN.
 
-3.5 Testando a Conexão ao Snowflake
-Para verificar se a conexão foi configurada corretamente, acesse o container do Airflow:
+3.5 Testando a Conexão ao Snowflake:  
+Para verificar se a conexão foi configurada corretamente, acesse o contêiner do Airflow:
 
  ```bash 
 docker exec -it <container_name> bash
 ```
-Teste a conexão configurada: Utilize o comando airflow connections get para verificar os detalhes da conexão. 
+Teste a conexão configurada: Utilize o comando airflow connections get para verificar os detalhes da conexão: 
 
  ```bash
 airflow connections get <Connection Id>
