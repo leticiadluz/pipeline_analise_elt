@@ -3,3 +3,5 @@
 config/
 logs/
 plugins/
+test.py
+test_snowflake_connection.py

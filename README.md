@@ -111,6 +111,7 @@ Isso permite inspecionar o ambiente diretamente:
  ```bash 
 docker exec -it <container_name> bash
 ```
+**Obs.:** A memória a RAM pode ser um fator importante na performance dos contêineres Docker, pode haver demora na inicialização de um contêiner Docker e sua transição para o estado "healthy".
 
 2.11 Acesse o Airflow: Aguarde a inicialização dos contêineres. Acesse o Airflow no navegador em: http://localhost:8080. Isso redirecionará para a tela de login do Airflow.
 
@@ -138,13 +139,13 @@ O usuário e senha padrão do Airflow são ambos **airflow.**
 - **Region:** Informe a região associada à conta Snowflake. Esse dado também pode ser encontrado em Admin > Accounts > Account.
 - **Role:** Defina a função (role) que será usada para a conexão, como SYSADMIN ou ACCOUNTADMIN.
 
-3.5 Testando a Conexão ao Snowflake:  
+3.5 Testando a configuração ao Snowflake:  
 Para verificar se a conexão foi configurada corretamente, acesse o contêiner do Airflow:
 
  ```bash 
 docker exec -it <container_name> bash
 ```
-Teste a conexão configurada: Utilize o comando airflow connections get para verificar os detalhes da conexão: 
+Verifique a conexão configurada: Utilize o comando airflow connections get para verificar os detalhes da conexão: 
 
  ```bash
 airflow connections get <Connection Id>
@@ -152,5 +153,22 @@ airflow connections get <Connection Id>
 Substitua Connection Id pelo nome que você definiu para a conexão, como snowflake_default.  
 
 Se o comando exibiu corretamente os detalhes da conexão, incluindo senha, login, e os demais campos configurados, isso indica que a conexão foi configurada corretamente no Airflow.
+
+
+3.6 Testando a conexão com o Snowflake:  
+
+Na pasta dags do seu projeto, crie um arquivo .py que conterá o código para testar a conexão com o Snowflake.
+
+Acessando o contêiner do Airflow:
+
+ ```bash 
+docker exec -it <container_name> bash
+```
+Após acessar o contêiner, confirme que os arquivos de DAG foram corretamente copiados ou montados utilizando o seguinte comando:
+
+ ```bash 
+ls /opt/airflow/dags
+```
+Este comando exibirá a lista de arquivos presentes na pasta dags dentro do contêiner.
 
 
