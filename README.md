@@ -151,6 +151,6 @@ airflow connections get <Connection Id>
 ```
 Substitua Connection Id pelo nome que você definiu para a conexão, como snowflake_default.  
 
-Se o comando exibiu corretamente os detalhes da conexão, incluindo senha, login, e os demais campos configurados, isso indica que a conexão foi configurada corretamente no Airflow
+Se o comando exibiu corretamente os detalhes da conexão, incluindo senha, login, e os demais campos configurados, isso indica que a conexão foi configurada corretamente no Airflow.
 
 
