@@ -1,5 +1,9 @@
 import requests
 from datetime import datetime
+from airflow.hooks.base import BaseHook
+from sqlalchemy import create_engine, text
+import psycopg2
+
 
 def dados_api():
     url_base = "https://fakestoreapi.com"
@@ -55,7 +59,7 @@ def dados_api():
                         "phone": user["phone"],
                         "city": user["address"]["city"],
                         "street": user["address"]["street"],
-                        "adress_number": user["address"]["number"],
+                        "address_number": user["address"]["number"],
                         "latitude": user["address"]["geolocation"]["lat"],
                         "longitude": user["address"]["geolocation"]["long"]
                     })
@@ -69,11 +73,37 @@ def dados_api():
     return dados_extraidos
 
 
-'''teste = dados_api()
+def carregar_dados(dados):
+    connection = BaseHook.get_connection("postgresss")
+    connection_string = f"postgresql+psycopg2://{connection.login}:{connection.password}@{connection.host}:{connection.port}/{connection.schema}"
+    engine = create_engine(connection_string)
 
-for endpoint, content in teste.items():
-    print(f"\nDados do endpoint {endpoint}:")
-    if content:
-        print(content) 
-    else:
-        print(f"Nenhum dadoretornado para o endpoint {endpoint}.")'''
+    try:
+        with engine.begin() as conn:  
+            if "products" in dados and dados["products"]:
+                for product in dados["products"]:
+                    conn.execute(text("""
+                        INSERT INTO PRODUCTS (PRODUCT_ID, TITLE, PRICE, PRODUCT_DESCRIPTION, CATEGORY, PRODUCT_IMAGE, RATING_RATE, RATING_COUNT)
+                        VALUES (:product_id, :title, :price, :product_description, :category, :product_image, :rating_rate, :rating_count)
+                        ON CONFLICT (PRODUCT_ID) DO NOTHING
+                    """), product)
+
+            if "carts" in dados and dados["carts"]:
+                for cart in dados["carts"]:
+                    conn.execute(text("""
+                        INSERT INTO CARTS (CART_ID, USERS_ID, PURCHASE_DATE, PRODUCT_ID, PRODUCT_QUANTITY)
+                        VALUES (:cart_id, :users_id, :purchase_date, :product_id, :product_quantity)
+                    """), cart)
+
+            if "users" in dados and dados["users"]:
+                for user in dados["users"]:
+                    conn.execute(text("""
+                        INSERT INTO USERS (USERS_ID, EMAIL, FIRSTNAME, LASTNAME, PHONE, CITY, STREET, ADDRESS_NUMBER, LATITUDE, LONGITUDE)
+                        VALUES (:users_id, :email, :firstname, :lastname, :phone, :city, :street, :address_number, :latitude, :longitude)
+                        ON CONFLICT (USERS_ID) DO NOTHING
+                    """), user)
+
+        print("Dados carregados com sucesso!")
+    except Exception as e:
+        print(f"Erro ao carregar dados: {e}")
+        raise

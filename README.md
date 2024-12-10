@@ -1,5 +1,44 @@
-## Tutorial: Como instalar e configurar o Apache Airflow com Docker
+# Pipeline para Análise: ETL com Airflow, Python e Visualização no Power BI 
 
+## 1. Introdução
+
+**Objetivo do Projeto:** Extrair e transformar dados de uma API de comércio eletrônico, disponibilizada pela FakeStoreAPI, utilizando Python e a biblioteca Requests. Apesar de a FakeStoreAPI conter dados fictícios, ela é uma excelente ferramenta para compreender conceitos fundamentais de projetos de dados, especialmente envolvendo orquestração e processos ETL. O objetivo final é realizar a análise desses dados, integrando-os a uma solução de visualização (Power BI).
+
+**Contexto:** Este projeto foi desenvolvido para demonstrar como criar uma solução orquestrada de extração, transformação e carregamento (ETL) utilizando Docker, Airflow e PostgreSQL. Os dados extraídos da API FakeStore são transformados no momento da extração, armazenados no banco de dados PostgreSQL e posteriormente utilizados para criar dashboards no Power BI.
+
+## 2. Escopo do Projeto
+**Incluído:**   
+- Configuração de um ambiente Docker com Airflow e conexão com PostgreSQL local, incluindo a instalação e configuração adequadas para garantir a comunicação entre os serviços.
+- Extração, transformação e armazenamento de dados da API FakeStore.
+- Integração com Power BI para criação de dashboards.
+
+**Excluído:**
+- Desenvolvimento de modelos preditivos ou análises estatísticas complexas.
+- Integração com outras APIs ou sistemas.
+
+## 3. Fontes de Dados
+**Descrição dos Dados:**
+- Origem: FakeStoreAPI (https://fakestoreapi.com/).
+- Estrutura: Dados de produtos, usuários e pedidos em formato JSON.
+- Qualidade dos Dados: Os dados estruturados e prontos para uso exigiram transformações para desnormalização. Essas transformações incluíram a reorganização dos dados de forma que cada conjunto de produtos relacionados fosse separado, especialmente no caso de carrinhos, com o objetivo de garantir que cada produto pudesse ser analisado individualmente e em seu contexto.
+Além disso, outras transformações também foram realizadas como: Renomeação de colunas para nomes mais intuitivos e conversão de formatos de data. 
+
+## 4. Metodologia
+**Ferramentas Utilizadas:**
+- Linguagem: Python
+- Bibliotecas: Todas que foram utilizadas já vêm pré-instaladas no contêiner Docker.
+- Orquestração: Apache Airflow
+- Banco de Dados: PostgreSQL
+- Visualização: Power BI
+
+**Etapas do Processo:**
+- Configurações e Conexão Necessárias: Todas as etapas estão detalhadas em <a href="#tutorial">Tutorial</a> <br>
+
+## 5. Resultados
+
+## 6. Conclusões e Recomendações
+
+## Tutorial: Como instalar e configurar o Apache Airflow com Docker <a name="tutorial"></a>
 Contexto: 
 - Airflow tem várias dependências (banco de dados, executores, webserver, scheduler). Configurá-las manualmente pode ser complexo. Com o Docker, essas dependências são gerenciadas em contêineres, facilitando a configuração.  
 - O Docker cria um ambiente isolado, garantindo que o Airflow funcione sem interferências de outros softwares instalados no sistema.  
@@ -183,4 +222,10 @@ Depois de confirmar que as DAGs estão sendo mapeadas corretamente, acesse a int
 
 ![alt text](imagens/teste_con_airflow.png)
 
+Posteriormente, já será possível realizar a criação e o carregamento dos dados no banco de dados. Para isso, basta configurar as DAGs responsáveis pelas tarefas de criação das tabelas e pelo processo de ETL (Extração, Transformação e Carga) para inserir os dados no banco. Essas DAGs podem ser acionadas diretamente na interface do Airflow, garantindo que os dados sejam processados e carregados corretamente
+
+Autor:
+Leticia da Luz
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/leticiadluz/)
 

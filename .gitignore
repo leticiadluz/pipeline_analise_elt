@@ -3,6 +3,4 @@
 config/
 logs/
 plugins/
-teste_postgres.py
-teste_mysql.py
 __pycache__/
