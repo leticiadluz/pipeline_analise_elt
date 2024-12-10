@@ -4,7 +4,6 @@ from airflow.hooks.base import BaseHook
 from sqlalchemy import create_engine, text
 import psycopg2
 
-
 def dados_api():
     url_base = "https://fakestoreapi.com"
     endpoints = ["products", "carts", "users"]

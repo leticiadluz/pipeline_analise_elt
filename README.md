@@ -1,14 +1,14 @@
-# Pipeline para Análise: ETL com Airflow, Python e Visualização no Power BI 
+# Pipeline para Análise: ETL com Airflow, Python e Visualizações no Power BI
 
 ## 1. Introdução
 
-**Objetivo do Projeto:** Extrair e transformar dados de uma API de comércio eletrônico, disponibilizada pela FakeStoreAPI, utilizando Python e a biblioteca Requests. Apesar de a FakeStoreAPI conter dados fictícios, ela é uma excelente ferramenta para compreender conceitos fundamentais de projetos de dados, especialmente envolvendo orquestração e processos ETL. O objetivo final é realizar a análise desses dados, integrando-os a uma solução de visualização (Power BI).
+**Objetivo do Projeto:** Extrair e transformar dados de uma API de comércio eletrônico, disponibilizada pela FakeStoreAPI, utilizando Python e a biblioteca nativas do Airflow. Apesar de a FakeStoreAPI conter dados fictícios, ela é uma excelente ferramenta para compreender conceitos fundamentais de projetos de dados, especialmente envolvendo orquestração e processos ETL. O objetivo final foi realizar a análise desses dados, integrando-os a uma solução de visualização (Power BI).
 
 **Contexto:** Este projeto foi desenvolvido para demonstrar como criar uma solução orquestrada de extração, transformação e carregamento (ETL) utilizando Docker, Airflow e PostgreSQL. Os dados extraídos da API FakeStore são transformados no momento da extração, armazenados no banco de dados PostgreSQL e posteriormente utilizados para criar dashboards no Power BI.
 
 ## 2. Escopo do Projeto
 **Incluído:**   
-- Configuração de um ambiente Docker com Airflow e conexão com PostgreSQL local, incluindo a instalação e configuração adequadas para garantir a comunicação entre os serviços.
+- Configuração do Airflow em um contêiner Docker e conexão com PostgreSQL local, incluindo a instalação e configuração adequadas para garantir a comunicação entre os serviços.
 - Extração, transformação e armazenamento de dados da API FakeStore.
 - Integração com Power BI para criação de dashboards.
 
@@ -20,13 +20,13 @@
 **Descrição dos Dados:**
 - Origem: FakeStoreAPI (https://fakestoreapi.com/).
 - Estrutura: Dados de produtos, usuários e pedidos em formato JSON.
-- Qualidade dos Dados: Os dados estruturados e prontos para uso exigiram transformações para desnormalização. Essas transformações incluíram a reorganização dos dados de forma que cada conjunto de produtos relacionados fosse separado, especialmente no caso de carrinhos, com o objetivo de garantir que cada produto pudesse ser analisado individualmente e em seu contexto.
+- Qualidade dos Dados: Os dados estão estruturados e prontos para uso, mas algumas tranformações, essas transformações incluíram a reorganização dos dados de forma que cada conjunto de produtos relacionados fosse separado, especialmente no caso de carrinhos, com o objetivo de garantir que cada produto pudesse ser analisado individualmente.
 Além disso, outras transformações também foram realizadas como: Renomeação de colunas para nomes mais intuitivos e conversão de formatos de data. 
 
 ## 4. Metodologia
 **Ferramentas Utilizadas:**
 - Linguagem: Python
-- Bibliotecas: Todas que foram utilizadas já vêm pré-instaladas no contêiner Docker.
+- Bibliotecas: Apenas bibliotecas nativas do Airflow, todas já pré-instaladas no contêiner Docker.
 - Orquestração: Apache Airflow
 - Banco de Dados: PostgreSQL
 - Visualização: Power BI
@@ -38,7 +38,7 @@ Além disso, outras transformações também foram realizadas como: Renomeação
 
 ## 6. Conclusões e Recomendações
 
-## Tutorial: Como instalar e configurar o Apache Airflow com Docker <a name="tutorial"></a>
+## 7. Tutorial: Como instalar e configurar o Apache Airflow com Docker <a name="tutorial"></a>
 Contexto: 
 - Airflow tem várias dependências (banco de dados, executores, webserver, scheduler). Configurá-las manualmente pode ser complexo. Com o Docker, essas dependências são gerenciadas em contêineres, facilitando a configuração.  
 - O Docker cria um ambiente isolado, garantindo que o Airflow funcione sem interferências de outros softwares instalados no sistema.  

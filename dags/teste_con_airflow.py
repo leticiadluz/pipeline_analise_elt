@@ -1,4 +1,3 @@
-# Testando a conexão entre o Airflow e um banco de dados PostgreSQL local
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.hooks.base import BaseHook
