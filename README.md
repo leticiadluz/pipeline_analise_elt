@@ -2,7 +2,7 @@
 
 ## 1. Introdução
 
-**Objetivo do Projeto:** Extrair e transformar dados de uma API de comércio eletrônico, disponibilizada pela FakeStoreAPI, utilizando Python e a biblioteca nativas do Airflow. Apesar de a FakeStoreAPI conter dados fictícios, ela é uma excelente ferramenta para compreender conceitos fundamentais de projetos de dados, especialmente envolvendo orquestração e processos ETL. O objetivo final foi realizar a análise desses dados, integrando-os a uma solução de visualização (Power BI).
+**Objetivo do Projeto:** Extrair e transformar dados de uma API de comércio eletrônico, disponibilizada pela FakeStoreAPI, utilizando Python e as bibliotecas nativas do Airflow. Apesar de a FakeStoreAPI conter dados fictícios, ela é uma excelente ferramenta para compreender conceitos fundamentais de projetos de dados, especialmente envolvendo orquestração e processos ETL. O objetivo final foi realizar a análise desses dados, integrando-os a uma solução de visualização (Power BI).
 
 **Contexto:** Este projeto foi desenvolvido para demonstrar como criar uma solução orquestrada de extração, transformação e carregamento (ETL) utilizando Docker, Airflow e PostgreSQL. Os dados extraídos da API FakeStore são transformados no momento da extração, armazenados no banco de dados PostgreSQL e posteriormente utilizados para criar dashboards no Power BI.
 
@@ -18,7 +18,7 @@
 
 ## 3. Fontes de Dados
 **Descrição dos Dados:**
-- Origem: FakeStoreAPI (https://fakestoreapi.com/).
+- Origem: [FakeStoreAPI.](https://fakestoreapi.com/)
 - Estrutura: Dados de produtos, usuários e pedidos em formato JSON.
 - Qualidade dos Dados: Os dados estão estruturados e prontos para uso, mas algumas tranformações, essas transformações incluíram a reorganização dos dados de forma que cada conjunto de produtos relacionados fosse separado, especialmente no caso de carrinhos, com o objetivo de garantir que cada produto pudesse ser analisado individualmente.
 Além disso, outras transformações também foram realizadas como: Renomeação de colunas para nomes mais intuitivos e conversão de formatos de data. 
@@ -222,7 +222,7 @@ Depois de confirmar que as DAGs estão sendo mapeadas corretamente, acesse a int
 
 ![alt text](imagens/teste_con_airflow.png)
 
-Posteriormente, já será possível realizar a criação e o carregamento dos dados no banco de dados. Para isso, basta configurar as DAGs responsáveis pelas tarefas de criação das tabelas e pelo processo de ETL (Extração, Transformação e Carga) para inserir os dados no banco. Essas DAGs podem ser acionadas diretamente na interface do Airflow, garantindo que os dados sejam processados e carregados corretamente
+Posteriormente, já será possível realizar a criação e o carregamento dos dados no banco de dados. Para isso, basta configurar as DAGs responsáveis pelas tarefas de criação das tabelas e pelo processo de ETL (Extração, Transformação e Carga) para inserir os dados no banco. Essas DAGs podem ser acionadas diretamente na interface do Airflow, garantindo que os dados sejam processados e carregados corretamente.
 
 Autor:
 Leticia da Luz
