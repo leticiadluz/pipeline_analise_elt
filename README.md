@@ -1,4 +1,4 @@
-## Tutorial 1 : Como instalar e configurar o Apache Airflow com Docker
+## Tutorial: Como instalar e configurar o Apache Airflow com Docker
 
 Contexto: 
 - Airflow tem várias dependências (banco de dados, executores, webserver, scheduler). Configurá-las manualmente pode ser complexo. Com o Docker, essas dependências são gerenciadas em contêineres, facilitando a configuração.  
@@ -167,7 +167,7 @@ Se o comando exibiu corretamente os detalhes da conexão, incluindo senha, login
 
 Na pasta dags do seu projeto, crie um arquivo .py que conterá o código para testar a conexão com o PostgreSQL.
 
-Acessando o contêiner do Airflow:
+Acesse o contêiner do Airflow:
 
  ```bash 
 docker exec -it <container_name> bash
