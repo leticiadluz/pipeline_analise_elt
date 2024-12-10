@@ -68,8 +68,8 @@ def dados_api():
 
     return dados_extraidos
 
-'''
-teste = dados_api()
+
+'''teste = dados_api()
 
 for endpoint, content in teste.items():
     print(f"\nDados do endpoint {endpoint}:")

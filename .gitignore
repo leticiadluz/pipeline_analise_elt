@@ -3,5 +3,6 @@
 config/
 logs/
 plugins/
-test.py
-test_snowflake_connection.py
+teste_postgres.py
+teste_mysql.py
+__pycache__/
