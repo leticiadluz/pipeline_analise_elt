@@ -1,4 +1,4 @@
-# Pipeline para Análise: ETL com Airflow, Python e Visualizações no Power BI
+# Pipeline de Dados: ETL com Airflow, Python e Visualizações no Power BI
 
 ## 1. Introdução
 
