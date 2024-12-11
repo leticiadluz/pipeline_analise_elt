@@ -2,7 +2,7 @@
 
 ## 1. Introdução
 
-**Objetivo do Projeto:** Extrair e transformar dados de uma API de comércio eletrônico, disponibilizada pela FakeStoreAPI, utilizando Python e as bibliotecas nativas do Airflow. Apesar de a FakeStoreAPI conter dados fictícios, ela é uma excelente ferramenta para compreender conceitos fundamentais de projetos de dados, especialmente envolvendo orquestração e processos ETL. O objetivo final foi realizar a análise desses dados, integrando-os a uma solução de visualização (Power BI).
+**Objetivo do Projeto:** Extrair e transformar dados de uma API de comércio eletrônico, disponibilizada pela FakeStoreAPI, utilizando Python e as bibliotecas nativas do Airflow. Apesar de a FakeStoreAPI conter dados fictícios, ela é uma excelente ferramenta para compreender conceitos fundamentais de projetos de dados, especialmente envolvendo orquestração e processos ETL. **O objetivo final foi realizar a análise desses dados, integrando-os a uma solução de visualização (Power BI).**
 
 **Contexto:** Este projeto foi desenvolvido para demonstrar como criar uma solução orquestrada de extração, transformação e carregamento (ETL) utilizando Docker, Airflow e PostgreSQL. Os dados extraídos da API FakeStore são transformados no momento da extração, armazenados no banco de dados PostgreSQL e posteriormente utilizados para criar dashboards no Power BI.
 
@@ -10,7 +10,7 @@
 **Incluído:**   
 - Configuração do Airflow em um contêiner Docker e conexão com PostgreSQL local, incluindo a instalação e configuração adequadas para garantir a comunicação entre os serviços.
 - Extração, transformação e armazenamento de dados da API FakeStore.
-- Integração com Power BI para criação de dashboards.
+- Integração do banco de dados com Power BI para criação de dashboards analíticos.
 
 **Excluído:**
 - Desenvolvimento de modelos preditivos ou análises estatísticas complexas.
@@ -36,9 +36,69 @@ Além disso, outras transformações também foram realizadas como: Renomeação
 
 ## 5. Resultados
 
-## 6. Conclusões e Recomendações
+- Representação do modelo relacional entre as tabelas: products, carts e users. 
 
-## 7. Tutorial: Como instalar e configurar o Apache Airflow com Docker <a name="tutorial"></a>
+![alt text](imagens/relacionamento_tabelas.png)
+
+**Tabela products:** Contém informações sobre os produtos, incluindo category, price, product_description, product_id (chave primária), product_image, rating_count, rating_rate, e title.
+
+**Tabela carts:** Contém informações sobre os carrinhos de compra.  Apesar de o campo cart_id ser utilizado para identificar os carrinhos, ele não foi definido como chave primária, pois o objetivo era permitir que múltiplos produtos associados a um mesmo carrinho ficassem em linhas separadas, sendo necessário repetir a chave identificadora do carrinho (cart_id). Isso significa que cada linha na tabela representa um produto específico dentro de um carrinho, com os seguintes campos:
+- product_id: chave estrangeira que relaciona a tabela carts com a tabela products.
+- product_quantity: quantidade do produto específico no carrinho.
+- purchase_date: data da compra associada ao carrinho.
+- users_id: chave estrangeira que relaciona a tabela carts com a tabela users.
+
+**Tabela users:** Contém informações dos usuários, como users_id (chave primária), address_number, city, email, firstname, lastname, latitude, longitude, phone, e street.
+
+### 5.1 Análises Descritivas
+
+**Produtos:** 
+
+![alt text](imagens/descritiva_produtos.png)
+
+- A categoria "electronics" e "women's clothing" têm o maior número de produtos (6 cada).
+- As categorias "jewelry" e "men's clothing" possuem menos produtos (4 cada).
+- electronics" apresenta a maior média de preço entre as categorias, seguida por "jewelry".
+- As categorias "men's clothing" e "women's clothing" têm as menores médias de preço, indicando produtos mais acessíveis
+- Produtos mais bem avaliados: Silicon Power 256GB SSD" e "WD 4TB Gaming Drive", ambos com nota 4,8.
+- Produto com mais avaliações: "SanDisk SSD PLUS 1TB", com 470 avaliações.
+- Produtos com menor avaliação: Pierced Owl Rose Gold Plated Stainless Steel Double" (1,9) e "Samsung 49-Inch CHG90 Monitor" (2,1).
+
+**Compras:** 
+
+![alt text](imagens/descritiva_compras.png)
+
+- Vendas de Produtos por Categoria: A categoria "men's clothing" lidera com o maior número de vendas, totalizando cerca de 30 unidades. Outras categorias apresentam um desempenho consideravelmente menor: "electronics" e "jewelry" estão próximas em termos de vendas. "women's clothing" apresenta o menor número de vendas. 
+- Vendas de Produtos por Ano, Mês e Dia: As vendas mostraram um pico no mês de janeiro de 2020, com um declínio contínuo nos meses seguintes (fevereiro e março). Isso pode refletir uma sazonalidade, promoções no início do ano, ou outras tendências de mercado. 
+-  Receita Total por Produto:  A receita total foi obtida através por meio de uma coluna calculada, multiplicando o preço de cada produto pela quantidade vendida. Os produtos mais lucrativos incluem: Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptop: Com receita superior a 2 mil, sendo o produto de maior destaque. John Hardy Women's Legends Naga Gold Bracelet: O segundo mais rentável, também ultrapassando 1,5 mil. Produtos como "Pierced Owl Rose Gold Plated Stainless Steel Double" e outros acessórios possuem receita muito menor, indicando menor interesse ou menor preço médio.
+
+### 5.2 Análise Diagnóstica
+**Há uma relação entre a classificação e o número de avaliações com a quantidade de produtos vendidos?** 
+
+![alt text](imagens/descritiva.png)
+
+- Classificação e Quantidade de Produtos Vendidos: Parece haver uma relação positiva fraca entre a classificação e a quantidade de produtos vendidos. Produtos com classificações mais altas (ex.: acima de 4,5) tendem a ter mais vendas. Isso sugere que os clientes confiam em avaliações positivas ao decidir comprar.
+- Número de Avaliações e Quantidade de Produtos Vendidos: A relação não é evidente ou linear. Produtos com mais avaliações não necessariamente vendem mais. Possivelmente, o impacto do número de avaliações seja menor do que o impacto da qualidade das avaliações (classificação).
+
+Podemos concluir que, a classificação parece ser um fator mais influente nas vendas do que o número de avaliações. Mas como o tamanho da amostra (10 vendas) pode influenciar bastante os resultados de correlação, especialmente em uma análise como essa, os resultados de correlação podem não ser estatisticamente significativos, pois há pouca variabilidade para capturar padrões reais. Com uma amostra maior, é mais provável que padrões reais (ou ausência deles) fiquem mais claros e confiáveis.
+Mas de forma geral, podemos destacar que os clientes priorizam a qualidade da experiência relatada (nota) em vez da quantidade de feedback recebido. 
+
+## 6. Recomendações
+
+- **Men's Clothing:** Como essa categoria apresenta o maior número de vendas, é essencial continuar investindo em campanhas de marketing e promoções para reforçar o domínio no segmento. Garantir alta disponibilidade de produtos populares, como o "Fjallraven - Foldsack No. 1 Backpack" e o "Mens Cotton Jacket", para atender à demanda crescente e evitar rupturas de estoque. Criar combos que incluam o "Fjallraven - Foldsack No. 1 Backpack", produto líder em receita, com acessórios relacionados, incorporando produtos com menor receita nesses combos para atrair novos consumidores para essas linhas, aumentando a visibilidade e as chances de vendas futuras. Oferecer descontos progressivos em compras múltiplas, incentivando os clientes a adquirir mais produtos em uma única transação. Garantir que produtos bem avaliados 
+
+- **Electronics:** Focar na promoção de produtos com alta receita, como o "WD 4TB Gaming Drive", para fortalecer a reputação e atrair consumidores do segmento gamer e tecnológico. Oferecer garantia estendida e suporte técnico como um diferencial competitivo, especialmente para produtos de maior valor agregado, como SSDs. Também seria interessante aumentar o portfólio de produtos devido a alta média de preços. Focar nos produtos bem avaliados, promovendo itens como SSDs e Gaming Drives, que já possuem boa aceitação.
+
+- **Jewelry:** Apostar em campanhas que promovam peças com maior receita, como o "John Hardy Women's Legends Naga Gold". Melhorar a visibilidade de produtos com menor desempenho, como o "White Gold Plated Princess", usando estratégias de marketing digital. Analisar feedbacks negativos, focando em melhorias nos produtos mal avaliados para evitar prejuízo à reputação da marca, como "Pierced Owl Rose Gold Plated Stainless Steel Double" 
+
+- **"women's clothing":**  Aproveitar os itens mais vendidos e bem avaliados para campanhas de marketing direcionadas, como "MBJ Women's Solid Short Sleeve Boat Neck V". Analisar o feedback dos clientes para ajustar e melhorar produtos com avaliação moderada ou negativa, visando atender melhor às expectativas do público. Criar pacotes combinando roupas com acessórios que já apresentam um bom ticket médio, como joias para aumentar o número de vendas.
+
+- **Priorizar a qualidade das avaliações (classificação alta):** Verificamos anteriormente que produtos com classificações mais altas tendem de certa forma a ter mais vendas, mesmo que não tenham muitas avaliações, desta forma, podemos sugerir implementar um envio automatizado de e-mails para clientes que adquiriram os produtos, incentivando-os a deixar uma avaliação. O e-mail deve incluir botão interativo que direcione diretamente para a página de avaliação do produto, facilitando o processo e aumentando a probabilidade de participação.
+
+ 
+## 7. Tutorial: Instalação e Configuração do Apache Airflow com Docker, Integração com PostgreSQL e Conexão ao Power BI <a name="tutorial"></a>
+
+
 Contexto: 
 - Airflow tem várias dependências (banco de dados, executores, webserver, scheduler). Configurá-las manualmente pode ser complexo. Com o Docker, essas dependências são gerenciadas em contêineres, facilitando a configuração.  
 - O Docker cria um ambiente isolado, garantindo que o Airflow funcione sem interferências de outros softwares instalados no sistema.  
@@ -158,7 +218,7 @@ docker exec -it <container_name> bash
 
 O usuário e senha padrão do Airflow são ambos **airflow.**
 
-### 3 . Configurando o PostgreSQL no Airflow:
+### 3. Configurando o PostgreSQL no Airflow:
 
 3.1 Acesse a interface do Airflow.
 
@@ -223,6 +283,20 @@ Depois de confirmar que as DAGs estão sendo mapeadas corretamente, acesse a int
 ![alt text](imagens/teste_con_airflow.png)
 
 Posteriormente, já será possível realizar a criação e o carregamento dos dados no banco de dados. Para isso, basta configurar as DAGs responsáveis pelas tarefas de criação das tabelas e pelo processo de ETL (Extração, Transformação e Carga) para inserir os dados no banco. Essas DAGs podem ser acionadas diretamente na interface do Airflow, garantindo que os dados sejam processados e carregados corretamente.
+
+
+### 4. Conexão com o Power BI:
+
+4.1 Configuração Inicial no PostgreSQL: Certifique-se de que as tabelas no banco de dados PostgreSQL estão prontas e organizadas para serem consumidas no Power BI.
+
+![alt text](imagens/tabelas.png)
+
+4.2 Conexão com o Power BI:
+No Power BI Desktop: Use o conector nativo do Power BI para PostgreSQL:
+- No Power BI, vá em Obter Dados.
+- Escolha Banco de Dados PostgreSQL.
+- Insira os detalhes de conexão: endereço do servidor, porta, nome do banco de dados, usuário e senha.
+- Teste a conexão e selecione as tabelas ou views para carregar.
 
 Autor:
 Leticia da Luz
