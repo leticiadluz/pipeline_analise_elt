@@ -75,7 +75,7 @@ Além disso, outras transformações também foram realizadas como: Renomeação
 ### 5.2 Análise Diagnóstica
 **Há uma relação entre a classificação e o número de avaliações com a quantidade de produtos vendidos?** 
 
-![alt text](imagens/descritiva.png)
+![alt text](imagens/diagnostica.png)
 
 - Classificação e Quantidade de Produtos Vendidos: Parece haver uma relação positiva fraca entre a classificação e a quantidade de produtos vendidos. Produtos com classificações mais altas (ex.: acima de 4,5) tendem a ter mais vendas. Isso sugere que os clientes confiam em avaliações positivas ao decidir comprar.
 - Número de Avaliações e Quantidade de Produtos Vendidos: A relação não é evidente ou linear. Produtos com mais avaliações não necessariamente vendem mais. Possivelmente, o impacto do número de avaliações seja menor do que o impacto da qualidade das avaliações (classificação).
