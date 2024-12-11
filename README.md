@@ -42,11 +42,13 @@ Além disso, outras transformações também foram realizadas como: Renomeação
 
 **Tabela products:** Contém informações sobre os produtos, incluindo category, price, product_description, product_id (chave primária), product_image, rating_count, rating_rate, e title.
 
-**Tabela carts:** Contém informações sobre os carrinhos de compra.  Apesar de o campo cart_id ser utilizado para identificar os carrinhos, ele não foi definido como chave primária, pois o objetivo era permitir que múltiplos produtos associados a um mesmo carrinho ficassem em linhas separadas, sendo necessário repetir a chave identificadora do carrinho (cart_id). Isso significa que cada linha na tabela representa um produto específico dentro de um carrinho, com os seguintes campos:
+**Tabela carts:** Contém informações sobre os carrinhos de compra.  Apesar de o campo cart_id ser utilizado para identificar os carrinhos, **ele não foi definido como chave primária, pois o objetivo era permitir que múltiplos produtos associados a um mesmo carrinho ficassem em linhas separadas**, sendo necessário repetir a chave identificadora do carrinho (cart_id). Isso significa que cada linha na tabela representa um produto específico dentro de um carrinho, com os seguintes campos:
 - product_id: chave estrangeira que relaciona a tabela carts com a tabela products.
 - product_quantity: quantidade do produto específico no carrinho.
 - purchase_date: data da compra associada ao carrinho.
 - users_id: chave estrangeira que relaciona a tabela carts com a tabela users.
+
+![alt text](imagens/carts.png)
 
 **Tabela users:** Contém informações dos usuários, como users_id (chave primária), address_number, city, email, firstname, lastname, latitude, longitude, phone, e street.
 
